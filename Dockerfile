@@ -15,7 +15,7 @@ RUN \
  echo "**** install build packages ****" && \
  apk add --no-cache bash gcc musl-dev \
     python3 python3-dev py3-pip \
-    libxslt-dev libxml2-dev
+    libxslt-dev libxml2-dev curl
 
 RUN \
  apk add --no-cache --virtual=build-dependencies \
@@ -50,6 +50,13 @@ RUN \
 	mock \
 	plexapi \
 	pycryptodomex
+RUN \
+  echo "**** Install s6-overlay ****" && \ 
+  curl -sX GET "https://api.github.com/repos/just-containers/s6-overlay/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]' > /etc/S6_RELEASE && \
+  wget https://github.com/just-containers/s6-overlay/releases/download/`cat /etc/S6_RELEASE`/s6-overlay-amd64.tar.gz -O /tmp/s6-overlay-amd64.tar.gz && \
+  tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
+  rm /tmp/s6-overlay-amd64.tar.gz && \
+  echo "**** Installed s6-overlay `cat /etc/S6_RELEASE` ****"
 RUN  \
   echo "**** install app ****" && \
   mkdir -p /app/tautulli && \
@@ -64,7 +71,7 @@ RUN \
  source /app/tautulli/bin/activate && \
  python3 -m pip install --upgrade pip setuptools pip-tools
 
-RUN pip3 install -r /app/tautulli/requirements.txt
+RUN python3 -m pip -q install --no-cache-dir -r /app/tautulli/requirements.txt
 
 # add local files
 COPY root/ /
