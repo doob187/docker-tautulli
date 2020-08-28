@@ -1,9 +1,9 @@
 #!/usr/bin/with-contenv bash
-config=/app/tautulli/config.ini
+config=/config/config.ini
 
 echo "Set Permissions on /app & /config"
 # permissions
-chown -R tatulli:tatulli \
+chown -R tautulli:tautulli \
 	/app \
 	/config
 echo " fix config.ini "
@@ -12,7 +12,7 @@ sed -i "s#check_github = 1#check_github = 0#g" ${config}
 sed -i "s#check_github_interval = 360#check_github_interval = 86400#g" ${config}
 sed -i "s#check_github_on_startup = 1#check_github_on_startup = 0#g" ${config}
 
-chown -hR tatulli:tatulli  \
+chown -hR tautulli:tautulli  \
 	/app \
 	/config
 
