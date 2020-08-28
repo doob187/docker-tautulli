@@ -48,17 +48,15 @@ RUN \
 	"https://github.com/zSeriesGuy/Tautulli/archive/${TAUTULLI_RELEASE}.tar.gz" && \
  tar xf \
  /tmp/tautulli.tar.gz -C \
-	/app/tautulli --strip-components=1 && \
- echo "**** Hard Coding versioning ****" && \
- echo "${TAUTULLI_RELEASE}" > /app/tautulli/version.txt && \
- echo "master" > /app/tautulli/branch.txt
+	/app/tautulli --strip-components=1 
 RUN \
- addgroup tautulli && sudo adduser --system --no-create-home tautulli --ingroup tautulli && \
+ addgroup tautulli && \
+ adduser --system --no-create-home tautulli --ingroup tautulli && \
  chown tautulli:tautulli -R /app/tautulli && \
- python3 -m venv /app/Tautulli && \
+ python3 -m venv /app/tautulli && \
  source /app/tautulli/bin/activate && \
  python3 -m pip install --upgrade pip setuptools pip-tools
- RUN \
+RUN \
  pip3 install -r /app/tautulli/requirements.txt && \
  echo "**** cleanup ****" && \
  apk del --purge \
