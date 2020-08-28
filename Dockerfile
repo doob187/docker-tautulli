@@ -70,8 +70,10 @@ RUN \
  python3 -m venv /app/tautulli && \
  source /app/tautulli/bin/activate && \
  python3 -m pip install --upgrade pip setuptools pip-tools
-
-RUN python3 -m pip -q install --no-cache-dir -r /app/tautulli/requirements.txt
+RUN \
+  echo "**** update pip ****" && \
+  pip -q install --upgrade pip idna==2.8
+RUN python3 -m pip -q install --ignore-installed --no-cache-dir -r /app/tautulli/requirements.txt
 
 # add local files
 COPY root/ /
