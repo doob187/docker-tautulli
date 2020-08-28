@@ -1,12 +1,16 @@
 FROM alpine:latest
 
-# set version label
-ARG BUILD_DATE
-ARG VERSION
-ARG TAUTULLI_RELEASE
+FROM alpine:latest
+ARG BUILD_DATE="unknown"
+ARG COMMIT_AUTHOR="unknown"
+LABEL maintainer=${COMMIT_AUTHOR} \
+      org.label-schema.build-date=${BUILD_DATE}
+
 
 # Inform app this is a docker env
-ENV TAUTULLI_DOCKER=True
+ENV TAUTULLI_DOCKER=True \
+    TZ="Europe/Berlin"
+
 
 RUN \
  echo "**** install build packages ****" && \
