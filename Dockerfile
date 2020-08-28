@@ -1,4 +1,4 @@
-FROM lsiobase/alpine:3.12
+FROM alpine:latest
 
 # set version label
 ARG BUILD_DATE
@@ -21,26 +21,21 @@ RUN \
 	gcc \
 	make \
 	py3-pip \
-	python3-dev \
 	python3-venv \ 
-	python3-all-dev && \
+	python3-all-dev \
+	git-core
+RUN \
  echo "**** install pip packages ****" && \
  pip3 install --no-cache-dir -U \
 	mock \
 	plexapi \
-	pycryptodomex && \
- echo "**** install app ****" && \
- mkdir -p /app/tautulli && \
- if [ -z ${TAUTULLI_RELEASE+x} ]; then \
-	TAUTULLI_RELEASE=$(curl -sX GET "https://api.github.com/repos/zSeriesGuy/Tautulli/releases/latest" \
-	| jq -r '. | .tag_name'); \
- fi && \
- curl -o \
- /tmp/tautulli.tar.gz -L \
-	"https://github.com/zSeriesGuy/Tautulli/archive/${TAUTULLI_RELEASE}.tar.gz" && \
- tar xf \
- /tmp/tautulli.tar.gz -C \
-	/app/tautulli --strip-components=1 
+	pycryptodomex
+RUN  \
+  echo "**** install app ****" && \
+  mkdir -p /app/tautulli && \
+  echo "**** install tautulli ****" && \
+  git clone --depth 1 --single-branch --branch master  https://github.com/zSeriesGuy/Tautulli.git /app/tautulli
+
 RUN \
  addgroup tautulli && \
  adduser --system --no-create-home tautulli --ingroup tautulli && \
