@@ -1,5 +1,6 @@
 #!/usr/bin/with-contenv bash
+uid=${PUID:-1000}
+user=$(getent passwd $uid | awk -F: '{print $1}')
 
-exec \
-	s6-setuidgid abc python3 /app/tautulli/Tautulli.py \
+exec s6-setuidgid $user python3 python3 /app/tautulli/Tautulli.py \
 	--datadir /config
