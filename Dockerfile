@@ -73,7 +73,9 @@ RUN \
 RUN \
   echo "**** update pip ****" && \
   pip -q install --upgrade pip idna==2.8
-RUN python3 -m pip -q install --ignore-installed --no-cache-dir -r /app/tautulli/requirements.txt
+RUN sed 's/==/>=/g' /app/tautulli/requirements.txt > /tmp/TMP_FILE && \
+    mv /tmp/TMP_FILE /app/tautulli/requirements-docker.txt
+RUN python3 -m pip -q install --no-cache-dir -r /app/tautulli/requirements-docker.txt
 
 # add local files
 COPY root/ /
