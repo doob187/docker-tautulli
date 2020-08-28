@@ -10,17 +10,9 @@ ENV TAUTULLI_DOCKER=True
 
 RUN \
  echo "**** install build packages ****" && \
- apk add --no-cache --virtual=build-dependencies \
-	curl \
-	g++ \
-	gcc \
-	make \
-	py3-pip \
-	python3-dev \
-	python3-venv \ 
-	python3-all-dev && \
- echo "**** install packages ****" && \
- apk add --no-cache \
+ echo http://dl-cdn.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories && \
+ apk --no-cache update -qq && apk --no-cache upgrade -qq && apk --no-cache fix -qq && \
+ apk add --quiet --no-cache \
 	jq \
 	py3-openssl \
 	py3-setuptools \
