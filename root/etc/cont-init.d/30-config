@@ -1,6 +1,23 @@
 #!/usr/bin/with-contenv bash
+config=/app/tautulli/config.ini
 
+echo "Set Permissions on /app & /config"
 # permissions
-chown -R abc:abc \
+chown -R tatulli:tatulli \
 	/app \
 	/config
+echo " fix config.ini "
+sed -i "s#git_user = Tautulli#git_user = zSeriesGuy#g" ${config}
+sed -i "s#check_github = 1#check_github = 0#g" ${config}
+sed -i "s#check_github_interval = 360#check_github_interval = 86400#g" ${config}
+sed -i "s#check_github_on_startup = 1#check_github_on_startup = 0#g" ${config}
+
+chown -hR tatulli:tatulli  \
+	/app \
+	/config
+
+find /app -type d -exec chmod 0777 \{\} \;
+find /app -type f -exec chmod 0777 \{\} \;
+find /config -type f -exec chmod 0777 \{\} \;
+find /config -type d -exec chmod 0777 \{\} \;
+finf /config -type f -name "config.ini" -type f -exec chmod 0775 \{\} \;
