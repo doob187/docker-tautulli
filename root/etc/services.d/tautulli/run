@@ -7,5 +7,7 @@
 # shellcheck disable=SC2086
 umask 022
 command="python3 /app/tautulli/Tautulli.py"
+command_2="chown tautulli:tautulli /app/tautulli"
+$command_2
 echo "-> Starting Tautulli <-"
 exec s6-setuidgid tautulli $command
