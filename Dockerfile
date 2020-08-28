@@ -16,12 +16,15 @@ RUN \
  apk add --no-cache --virtual=build-dependencies \
 	curl \
 	g++ \
-	gcc \
 	make \
-	py3-pip \
 	python3 \
 	python3-venv \
-        python3-dev
+        gcc \
+        git \
+        python3 \
+        python3-dev \
+        py3-pip \
+        musl-dev
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
@@ -30,7 +33,12 @@ RUN \
 	py3-setuptools \
 	python3 \
 	python3-venv \
-        python3-dev
+        gcc \
+        git \
+        python3 \
+        python3-dev \
+        py3-pip \
+        musl-dev
 RUN \
  echo "**** install pip packages ****" && \
  pip3 install --no-cache-dir -U \
