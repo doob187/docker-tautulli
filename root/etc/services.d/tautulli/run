@@ -1,4 +1,4 @@
 #!/usr/bin/with-contenv bash
 
-exec s6-setuidgid tatulli python3 /app/tautulli/Tautulli.py \
+exec s6-setuidgid tautulli python3 /app/tautulli/Tautulli.py \
 	--datadir /config
