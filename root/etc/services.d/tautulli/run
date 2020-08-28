@@ -1,4 +1,11 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
-exec s6-setuidgid tautulli python3 /app/tautulli/Tautulli.py \
-	--datadir /config
+# Copyright (c) 2020, MrDoob
+# All rights reserved.
+
+# shellcheck disable=SC2086
+umask 022
+command="python3 /app/tautulli/Tautulli.py"
+echo "-> Starting Tautulli <-"
+exec s6-setuidgid tautulli $command
