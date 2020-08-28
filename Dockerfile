@@ -12,18 +12,25 @@ RUN \
  echo "**** install build packages ****" && \
  echo http://dl-cdn.alpinelinux.org/alpine/edge/community/ >> /etc/apk/repositories && \
  apk --no-cache update -qq && apk --no-cache upgrade -qq && apk --no-cache fix -qq && \
- apk add --quiet --no-cache \
-	jq \
-	py3-openssl \
-	py3-setuptools \
+ echo "**** install build packages ****" && \
+ apk add --no-cache --virtual=build-dependencies \
 	curl \
 	g++ \
 	gcc \
 	make \
 	py3-pip \
-	python3-venv \ 
-	python3-all-dev \
-	git-core
+	python3 \
+	python3-venv \
+        python3-dev
+RUN \
+ echo "**** install packages ****" && \
+ apk add --no-cache \
+	jq \
+	py3-openssl \
+	py3-setuptools \
+	python3 \
+	python3-venv \
+        python3-dev
 RUN \
  echo "**** install pip packages ****" && \
  pip3 install --no-cache-dir -U \
