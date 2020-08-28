@@ -63,14 +63,8 @@ RUN \
  python3 -m venv /app/tautulli && \
  source /app/tautulli/bin/activate && \
  python3 -m pip install --upgrade pip setuptools pip-tools
-RUN \
- pip3 install -r /app/tautulli/requirements.txt && \
- echo "**** cleanup ****" && \
- apk del --purge \
-	build-dependencies && \
- rm -rf \
-	/root/.cache \
-	/tmp/*
+
+RUN pip3 install -r /app/tautulli/requirements.txt
 
 # add local files
 COPY root/ /
