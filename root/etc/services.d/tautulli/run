@@ -12,5 +12,5 @@ $command_2
 echo "-> Starting Tautulli <-"
 #exec s6-setuidgid tautulli $command --datadir /config
 exec \
-	s6-setuidgid abc python3 /app/tautulli/Tautulli.py \
+	s6-setuidgid tautulli python3 /app/tautulli/Tautulli.py \
 	--datadir /config
